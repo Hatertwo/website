@@ -1,0 +1,68 @@
+<head>
+	<title>Practice Functional Javascript Page</title>
+	<link rel="icon" type="image/x-icon" href="./favicon.png" />
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+</head>
+<body>
+	<div id="firstParagraph" class="bodyParagraph">
+		<p>lets play Rock/Paper/Scissors!<br>
+		Rock smashes Scissors, Scissors cuts paper, and Paper covers Rock.</p>
+	</div>
+	<div id="userInput">
+		<input type="text" id="plyinput" name="plyChoice" onkeydown="submitnow(this)" placeholder="Select rock paper or scissors" />
+		<input type="button" id="btnsubmit" name="btnSUbmit" value="SUBMIT" />
+	</div>
+</body>
+
+<script>
+	var plyChoice, compChoice, options, weights;
+	options = ["rock", "paper", "scissors"];
+	weights = [32,32,32];
+
+	document.getElementById("btnsubmit").addEventListener("click", logic);
+
+	function submitnow(element){
+		if(event.key == "Enter"){
+			logic()
+		}
+	}
+
+	function thinker(ply, comp){
+		console.log("player", ply, options.indexOf(ply));
+		console.log("computer", comp, options.indexOf(comp));
+		var result, replyMessage;
+
+		ply = ply.toLowerCase();
+		if (options.includes(ply)){
+			replyMessage = "You played " + ply + ". I played " + comp;
+			result = options.indexOf(ply) - options.indexOf(comp);
+			result = (result + 3) % 3;
+			if (result == 2){
+				weights[options.indexOf(comp)] *= 1.5;
+				replyMessage += ". You Lose!";
+			} else if (result == 1){
+				weights[options.indexOf(comp)] *= 0.5;
+				replyMessage += ". You WIN!";
+			} else {
+				replyMessage += ". We Tied!";
+			}
+			console.log("result", result,"weights",weights);
+		} else {
+			relpyMessage = "You cant play '" + ply + "', please ply rock, paper or scissors.";
+		}
+		return replyMessage
+	}
+
+	function logic(){
+		plyChoice = document.getElementById("plyinput").value;
+		compChoice = Math.random();
+		if (compChoice < weights[0] / (weights[0] + weights[1] + weights[2])){
+			compChoice = "rock";
+		} else if (compChoice < (weights[0] + weights[1]) / (weights[0] + weights[1] + weights[2])){
+			compChoice = "paper";
+		} else {
+			compChoice = "scissors";
+		}
+		document.getElementById("firstParagraph").innerHTML = document.getElementById("firstParagraph").innerHTML+"<p>" + thinker(plyChoice, compChoice);
+ 	}
+</script>
