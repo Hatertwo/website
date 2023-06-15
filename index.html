@@ -9,8 +9,10 @@
 		Rock smashes Scissors, Scissors cuts paper, and Paper covers Rock.</p>
 	</div>
 	<div id="userInput">
-		<input type="text" id="plyinput" name="plyChoice" onkeydown="submitnow(this)" placeholder="Select rock paper or scissors" />
-		<input type="button" id="btnsubmit" name="btnSUbmit" value="SUBMIT" />
+		<div class="textFieldHolder">
+		 <input type="text" id="plyinput" name="plyChoice" onkeydown="submitnow(this)" placeholder="Select rock paper or scissors" />
+	</div>
+	<input type="button" id="btnsubmit" name="btnSUbmit" value="SUBMIT" />
 	</div>
 </body>
 
@@ -48,7 +50,7 @@
 			}
 			console.log("result", result,"weights",weights);
 		} else {
-			relpyMessage = "You cant play '" + ply + "', please ply rock, paper or scissors.";
+			replyMessage = "You cant play '" + ply + "', please play rock, paper or scissors.";
 		}
 		return replyMessage
 	}
@@ -64,5 +66,8 @@
 			compChoice = "scissors";
 		}
 		document.getElementById("firstParagraph").innerHTML = document.getElementById("firstParagraph").innerHTML+"<p>" + thinker(plyChoice, compChoice);
+		var scrollDiv = document.getElementById('firstParagraph');
+		scrollDiv.scrollTop = scrollDiv.scrollHeight;
+		//scroll all the way to the bottom
  	}
 </script>
